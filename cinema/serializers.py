@@ -1,7 +1,15 @@
 from django.db import transaction
 from rest_framework import serializers
 
-from cinema.models import Genre, Actor, CinemaHall, Movie, MovieSession, Order, Ticket
+from cinema.models import (
+    Genre,
+    Actor,
+    CinemaHall,
+    Movie,
+    MovieSession,
+    Order,
+    Ticket
+)
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -79,12 +87,24 @@ class MovieSessionListSerializer(MovieSessionSerializer):
 
 class MovieSessionForTicketSerializer(serializers.ModelSerializer):
     movie_title = serializers.CharField(source="movie.title", read_only=True)
-    cinema_hall_name = serializers.CharField(source="cinema_hall.name", read_only=True)
-    cinema_hall_capacity = serializers.IntegerField(source="cinema_hall.capacity", read_only=True)
+    cinema_hall_name = serializers.CharField(
+        source="cinema_hall.name",
+        read_only=True
+    )
+    cinema_hall_capacity = serializers.IntegerField(
+        source="cinema_hall.capacity",
+        read_only=True
+    )
 
     class Meta:
         model = MovieSession
-        fields = ("id", "show_time", "movie_title", "cinema_hall_name", "cinema_hall_capacity")
+        fields = (
+            "id",
+            "show_time",
+            "movie_title",
+            "cinema_hall_name",
+            "cinema_hall_capacity"
+        )
 
 
 class TicketSerializer(serializers.ModelSerializer):
@@ -115,7 +135,9 @@ class MovieSessionDetailSerializer(MovieSessionSerializer):
 
 
 class TicketDetailSerializer(serializers.ModelSerializer):
-    movie_session = serializers.PrimaryKeyRelatedField(queryset=MovieSession.objects.all())
+    movie_session = serializers.PrimaryKeyRelatedField(
+        queryset=MovieSession.objects.all()
+    )
 
     class Meta:
         model = Ticket
@@ -127,7 +149,11 @@ class TicketDetailForOrderDetailSerializer(TicketDetailSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    tickets = TicketDetailSerializer(read_only=False, many=True, allow_empty=False)
+    tickets = TicketDetailSerializer(
+        read_only=False,
+        many=True,
+        allow_empty=False
+    )
 
     class Meta:
         model = Order
@@ -155,4 +181,3 @@ class OrderListSerializer(OrderSerializer):
 
 class OrderDetailSerializer(OrderSerializer):
     tickets = TicketDetailForOrderDetailSerializer(read_only=True, many=True)
-

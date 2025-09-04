@@ -1,7 +1,4 @@
-import django_filters
-from django.template.context_processors import request
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, filters
+from rest_framework import viewsets
 
 from cinema import paginations
 from cinema.models import (
@@ -27,7 +24,7 @@ from cinema.serializers import (
     TicketSerializer,
     TicketDetailSerializer,
     OrderListSerializer,
-    OrderSerializer, OrderDetailSerializer,
+    OrderDetailSerializer,
 )
 
 
