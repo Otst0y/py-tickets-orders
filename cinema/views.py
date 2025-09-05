@@ -1,6 +1,5 @@
 from rest_framework import viewsets
 
-from cinema import paginations
 from cinema.models import (
     Genre,
     Actor,
@@ -31,20 +30,24 @@ from cinema.serializers import (
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
+    pagination_class = None
 
 
 class ActorViewSet(viewsets.ModelViewSet):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
+    pagination_class = None
 
 
 class CinemaHallViewSet(viewsets.ModelViewSet):
     queryset = CinemaHall.objects.all()
     serializer_class = CinemaHallSerializer
+    pagination_class = None
 
 
 class MovieViewSet(viewsets.ModelViewSet):
     serializer_class = MovieSerializer
+    pagination_class = None
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -81,6 +84,7 @@ class MovieViewSet(viewsets.ModelViewSet):
 class MovieSessionViewSet(viewsets.ModelViewSet):
     queryset = MovieSession.objects.all()
     serializer_class = MovieSessionSerializer
+    pagination_class = None
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -121,7 +125,6 @@ class TicketViewSet(viewsets.ModelViewSet):
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
-    pagination_class = paginations.OrderSetPagination
 
     def get_serializer_class(self):
         if self.action == "list":
